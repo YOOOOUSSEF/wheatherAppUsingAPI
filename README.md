@@ -1,4 +1,4 @@
-# Blog Web App
+# Wheather Web App
 
 This is a Node.js and Express-based web application that displays 7-day weather forecasts for the capitals of selected countries.
 
@@ -73,6 +73,4 @@ weather-web/
 
 ---
 
-## Author
-**Youssef Hassan** – Developer & Owner of the weather App  
-[GitHub](https://github.com/YOOOOUSSEF)
+
