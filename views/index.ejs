@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/main.css">
+    <title>Weather App</title>
+</head>
+<body>
+    <header>
+        <div class="navBar1">
+
+    <a href="" class="logo">Y&W</a>
+
+   <div class="navBar2">
+    <a href="/home" class="home">Home</a>
+    <a href="/about" class="about">About</a>
+    <a href="/contact" class="contact">Contact</a>
+   </div>
+
+</div>
+    </header>
+  
+<main>
+  <div class="form">
+  <h1>These temperatures are for major cities.</h1>
+  <form action="/country" method="post">
+    <div class="country">
+   <label for="country">Choose a country:</label>
+
+    <select id="country" name="country">
+    <option value=''>-- Choose a Country --</option>
+  
+    </select>
+    </div>
+
+
+    <div class="city">    
+    <label for="city">Choose a city:</label>
+
+    <select id="city" name="city">
+  
+    </select>
+</div>
+
+<input type="submit" value="submit">
+
+</form>
+</div>
+
+
+ <%if(locals.info){%>
+<div class="news">
+  <h2><%=co%>, <%=ci%></h2>
+    <%for(let i=0;i<info.time.length;i++){%>
+    <div class="card">
+        <h3>Time: <span><%=info.time[i]%></span></h3>
+        <h4>Max Temperature: <span><%=info.temperature_2m_max[i]%></span></h4>
+        <h4>Min Temperature: <span><%=info.temperature_2m_min[i]%></span></h4>
+        <%if(info.precipitation_sum[i]>0){%>
+        <h4 class="rain">RAINNY</h4>
+        <%}else{%>
+        <h4 class="rain">NO RAIN</h4>
+        <%}%>
+    </div>
+    <%}%>
+</div>
+<%}%> 
+
+
+</main>
+
+
+<footer class="footer">
+
+<div >
+<p>copyrights @  <%= new Date().getFullYear() %></p>
+</div>
+
+</footer>
+
+<script >
+     const countries = [
+      { name: "Afghanistan", code: "AF" },
+      { name: "Albania", code: "AL" },
+      { name: "Algeria", code: "DZ" },
+      { name: "Argentina", code: "AR" },
+      { name: "Australia", code: "AU" },
+      { name: "Brazil", code: "BR" },
+      { name: "Canada", code: "CA" },
+      { name: "China", code: "CN" },
+      { name: "Egypt", code: "EG" },
+      { name: "France", code: "FR" },
+      { name: "Germany", code: "DE" },
+      { name: "India", code: "IN" },
+      { name: "Japan", code: "JP" },
+      { name: "Mexico", code: "MX" },
+      { name: "Saudi Arabia", code: "SA" },
+      { name: "South Africa", code: "ZA" },
+      { name: "Spain", code: "ES" },
+      { name: "Turkey", code: "TR" },
+      { name: "United Kingdom", code: "GB" },
+      { name: "United States", code: "US" }
+    ];
+
+    const citiesByCountry = {
+      AF: ["Kabul", "Kandahar", "Herat"],
+      AL: ["Tirana", "Durrës", "Vlorë"],
+      DZ: ["Algiers", "Oran", "Constantine"],
+      AR: ["Buenos Aires", "Córdoba", "Rosario"],
+      AU: ["Sydney", "Melbourne", "Brisbane"],
+      BR: ["São Paulo", "Rio de Janeiro", "Brasília"],
+      CA: ["Toronto", "Vancouver", "Montreal"],
+      CN: ["Beijing", "Shanghai", "Guangzhou"],
+      EG: ["Cairo", "Alexandria", "Giza","Al Gharbia"],
+      FR: ["Paris", "Lyon", "Marseille"],
+      DE: ["Berlin", "Munich", "Hamburg"],
+      IN: ["Delhi", "Mumbai", "Bangalore"],
+      JP: ["Tokyo", "Osaka", "Kyoto"],
+      MX: ["Mexico City", "Guadalajara", "Monterrey"],
+      SA: ["Riyadh", "Jeddah", "Dammam"],
+      ZA: ["Johannesburg", "Cape Town", "Durban"],
+      ES: ["Madrid", "Barcelona", "Seville"],
+      TR: ["Istanbul", "Ankara", "Izmir"],
+      GB: ["London", "Manchester", "Birmingham"],
+      US: ["New York", "Los Angeles", "Chicago"]
+    };
+
+    const countrySelect = document.getElementById("country");
+    const citySelect = document.getElementById("city");
+
+    // countries dropdown
+    countries.forEach(c => {
+      const option = document.createElement("option");
+      option.value = c.code;
+      option.textContent = c.name;
+      countrySelect.appendChild(option);
+    });
+
+    // When country changes -> update cities
+    countrySelect.addEventListener("change", () => {
+      const selectedCode = countrySelect.value;
+
+      // Clear previous cities
+      citySelect.innerHTML = "<option value=''>-- Choose a City --</option>";
+
+      
+        citiesByCountry[selectedCode].forEach(city => {
+          const option = document.createElement("option");
+          option.value = city;
+          option.textContent = city;
+          citySelect.appendChild(option);
+        });
+
+    });
+</script>
+</body>
+</html>
